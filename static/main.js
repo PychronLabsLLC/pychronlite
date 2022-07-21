@@ -8,7 +8,16 @@ $(document).ready(function (){
 
 function doCalculations(){
     let url = '/doCalculations'
-    fetch(url).then(response=> response.json()).then(data=>{
+    var dt = $('#analysestable').DataTable()
+    // console.log(dt.rows().data())
+
+    fetch(url,
+        {method: 'POST',
+             headers: {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'},
+             body: JSON.stringify(dt.rows().data())}
+        ).then(response=> response.json()).then(data=>{
         console.log('docalculations response', data)
 
         var resultstable = $('#resultstable')

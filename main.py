@@ -1,4 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+
+from calculations import make_results
 
 app = Flask(__name__)
 
@@ -6,10 +8,11 @@ app = Flask(__name__)
 def root():
     return render_template('index.html')
 
-@app.route('/doCalculations')
+@app.route('/doCalculations', methods=['POST',])
 def doCalculations():
-    results = [{'sample': 'foo', 'age': 1, 'ageerr': 0.1}]
-    return {'results': results}
+    data = request.json
+    return {'results': make_results(data)}
+
 
 if __name__ == '__main__':
     # This is used when running locally only. When deploying to Google App
