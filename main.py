@@ -1,17 +1,22 @@
 from flask import Flask, render_template, request
 
-from calculations import make_results
+from calculations import make_results, make_means
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def root():
     return render_template('index.html')
 
-@app.route('/doCalculations', methods=['POST',])
+
+@app.route('/doCalculations', methods=['POST', ])
 def doCalculations():
     data = request.json
-    return {'results': make_results(data)}
+    results = make_results(data)
+    means = make_means(results)
+    return {'results': results,
+            'means': means}
 
 
 if __name__ == '__main__':
